@@ -16,11 +16,11 @@ public class FacileHttpd {
     }
   }
 
-  public void start() {
+  public void start(String dr, String inf) {
     try {
       while (true) {
         Socket sock = ssock.accept();
-        WorkerThread worker = new WorkerThread(sock);
+        WorkerThread worker = new WorkerThread(sock, dr, inf);
         worker.start();
       }
     } catch (Exception e) {
@@ -43,6 +43,6 @@ public class FacileHttpd {
         server.close();
       }
     });
-    server.start();
+    server.start("/usr/local/facilehttpd", "index.html");
   }
 }

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Request {
   private static final Pattern border = Pattern.compile("^$");
-  private static final Pattern request = Pattern.compile("^(.*) (.*) HTTP/(.*)$");
+  private static final Pattern request = Pattern.compile("^(\\w+)\\s+(.+)\\s+HTTP/([\\d.]+)$");
   private InputStream input;
   String method = null;
   String path = null;
