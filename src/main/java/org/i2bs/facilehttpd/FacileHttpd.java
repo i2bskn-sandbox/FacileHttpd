@@ -28,8 +28,21 @@ public class FacileHttpd {
     }
   }
 
+  public void close() {
+    try {
+      ssock.close();
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+  }
+
   public static void main(String[] args) {
-    FacileHttpd server = new FacileHttpd();
+    final FacileHttpd server = new FacileHttpd();
+    Runtime.getRuntime().addShutdownHook(new Thread(){
+      public void run() {
+        server.close();
+      }
+    });
     server.start();
   }
 }
