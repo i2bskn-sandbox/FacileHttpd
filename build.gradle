@@ -1,0 +1,18 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "org.i2bs.facilehttpd.FacileHttpd"
+
+jar {
+  manifest {
+    attributes("Main-Class": "org.i2bs.facilehttpd.FacileHttpd")
+  }
+}
+
+repositories {
+  mavenCentral()
+}
+ 
+dependencies {
+  testCompile group: 'junit', name: 'junit', version: '4.+'
+}
