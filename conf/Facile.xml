@@ -3,5 +3,5 @@
 <properties>
 <entry key="DocumentRoot">./html</entry>
 <entry key="Index">index.html</entry>
-<entry key="Port">8090</entry>
+<entry key="Port">8080</entry>
 </properties>
