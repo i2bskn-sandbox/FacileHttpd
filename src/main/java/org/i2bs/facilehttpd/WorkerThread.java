@@ -1,15 +1,18 @@
 package org.i2bs.facilehttpd;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.BufferedInputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.io.File;
+import java.net.Socket;
 import java.net.URLConnection;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.i2bs.facilehttpd.Request;
 
@@ -28,16 +31,15 @@ public class WorkerThread extends Thread {
   public void run() {
     try {
       Request req = new Request(sock);
-      sendfile(req);
-      hello();
+      response(req);
       req.close();
       sock.close();
     } catch (Exception e) {
-      System.out.println(e);
+      e.printStackTrace();
     }
   }
 
-  private void sendfile(Request req) throws IOException {
+  private void response(Request req) throws IOException {
     Path path = null;
     Matcher im = addindex.matcher(req.path);
     if (im.matches()) {
@@ -51,31 +53,60 @@ public class WorkerThread extends Thread {
       File file = new File(filepath);
       if (file.exists()) {
         String mimetype = URLConnection.guessContentTypeFromName(file.getName());
-        System.out.println("exists!");
+        header(req.version, 200, "OK", mimetype, (int)file.length());
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+        OutputStream out = sock.getOutputStream();
+        for (int c = in.read(); c >= 0; c = in.read()) {
+          out.write(c);
+        }
+        in.close();
+        out.close();
+        tmp_out(req, 200);
       } else {
-        System.out.println("404 Not Found");
+        String msg = "Not Found";
+        header(req.version, 404, msg, "text/plain", msg.length());
+        sendString(msg);
+        tmp_out(req, 404);
       }
     } else {
-      System.out.println("403 Forbidden");
+      String msg = "Forbidden";
+      header(req.version, 403, msg, "text/plain", msg.length());
+      sendString(msg);
+      tmp_out(req, 403);
     }
   }
 
-  private void hello() throws IOException {
-    String content = "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Sample</title></head><body><h1>Hello World!</h1></body></html>";
-    header(content.length());
+  private void sendString(String content) throws IOException {
     PrintWriter output = new PrintWriter(sock.getOutputStream());
     output.println(content);
     output.flush();
     output.close();
   }
 
-  private void header(int len) throws IOException {
+  private void header(String ver, int code, String msg, String type, int len) throws IOException {
     PrintWriter output = new PrintWriter(sock.getOutputStream());
-    output.println("HTTP/1.1 200 OK");
-    output.println("Content-Type: text/html");
+    output.print("HTTP/");
+    output.print(ver);
+    output.print(" ");
+    output.print(code);
+    output.print(" ");
+    output.println(msg);
+    output.print("Content-Type: ");
+    output.println(type);
     output.print("Content-Length: ");
     output.println(len);
     output.println("");
     output.flush();
+  }
+
+  private void tmp_out(Request req, int code) {
+    Date now = new Date();
+    System.out.print(now);
+    System.out.print(" ");
+    System.out.print(req.method);
+    System.out.print(" ");
+    System.out.print(req.path);
+    System.out.print(" ");
+    System.out.println(code);
   }
 }
