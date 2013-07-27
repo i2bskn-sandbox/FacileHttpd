@@ -4,27 +4,30 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import org.i2bs.facilehttpd.WorkerThread;
+import org.i2bs.facilehttpd.Configuration;
 
 public class FacileHttpd {
   private ServerSocket ssock;
+  private Configuration config;
 
-  public FacileHttpd() {
+  public FacileHttpd(Configuration c) {
     try {
-      ssock = new ServerSocket(8080);
+      config = c;
+      ssock = new ServerSocket(config.port);
     } catch (Exception e) {
-      System.out.println(e);
+      e.printStackTrace();
     }
   }
 
-  public void start(String dr, String inf) {
+  public void start() {
     try {
       while (true) {
         Socket sock = ssock.accept();
-        WorkerThread worker = new WorkerThread(sock, dr, inf);
+        WorkerThread worker = new WorkerThread(sock, config.docroot, config.index);
         worker.start();
       }
     } catch (Exception e) {
-      System.out.println(e);
+      e.printStackTrace();
     }
   }
 
@@ -32,17 +35,27 @@ public class FacileHttpd {
     try {
       ssock.close();
     } catch (Exception e) {
-      System.out.println(e);
+      e.printStackTrace();
     }
   }
 
   public static void main(String[] args) {
-    final FacileHttpd server = new FacileHttpd();
-    Runtime.getRuntime().addShutdownHook(new Thread(){
-      public void run() {
-        server.close();
-      }
-    });
-    server.start("/usr/local/facilehttpd", "index.html");
+    if (args.length == 0) {
+      System.out.println("Should specify the configuration file as an argument");
+      System.exit(1);
+    }
+
+    try {
+      Configuration configuration = new Configuration(args[0]);
+      final FacileHttpd server = new FacileHttpd(configuration);
+      Runtime.getRuntime().addShutdownHook(new Thread(){
+        public void run() {
+          server.close();
+        }
+      });
+      server.start();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }
