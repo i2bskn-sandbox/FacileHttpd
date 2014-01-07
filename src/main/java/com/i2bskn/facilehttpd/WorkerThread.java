@@ -1,4 +1,4 @@
-package org.i2bs.facilehttpd;
+package com.i2bskn.facilehttpd;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,8 +13,6 @@ import java.net.URLConnection;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.i2bs.facilehttpd.Request;
 
 public class WorkerThread extends Thread {
   private static final Pattern addindex = Pattern.compile("/$");

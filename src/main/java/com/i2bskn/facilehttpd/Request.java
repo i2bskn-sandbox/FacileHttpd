@@ -1,4 +1,4 @@
-package org.i2bs.facilehttpd;
+package com.i2bskn.facilehttpd;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,10 +1,7 @@
-package org.i2bs.facilehttpd;
+package com.i2bskn.facilehttpd;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import org.i2bs.facilehttpd.WorkerThread;
-import org.i2bs.facilehttpd.Configuration;
 
 public class FacileHttpd {
   private ServerSocket ssock;
