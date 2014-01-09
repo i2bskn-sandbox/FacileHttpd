@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<facile>
+  <servers>
+    <server>
+      <documentRoot>./html</documentRoot>
+      <index>index.html</index>
+      <!--<port>9000</port>-->
+    </server>
+  </servers>
+</facile>

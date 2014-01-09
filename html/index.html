@@ -1,11 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Facile HTTPD</title>
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Facile HTTPD</title>
+  <link rel="shortcut icon" href="favicon.ico">
+<style type="text/css">
+<!--
+div#wrapper {
+  text-align: left;
+  color: #113f28;
+  width: 780px;
+  margin: 0 auto;
+  font-size: 14px;
+}
 
-  <body>
-    <h1>It's works.</h1>
-  </body>
+header {text-align: center;}
+
+aside#sidebar {
+  width: 240px;
+  float: left;
+}
+
+article#contents {
+  width: 540px;
+  float: right;
+}
+
+article#contents section {
+  margin-bottom: 30px;
+}
+
+footer {
+  clear: both;
+  text-align: center;
+  color: #8c8d8e;
+  background-color: #113f28;
+}
+
+pre {
+  background-color: #090e0c;
+  color: #fff;
+}
+
+h1 {font-size: 30px;}
+h2 {font-size: 18px;}
+
+-->
+</style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <header>
+      <h1>FacileHttpd</h1>
+      <p>Sample http server on Linux/OSX.</p>
+    </header>
+
+    <aside id="sidebar">
+      <section>
+        <h2>Dependencies</h2>
+        <ul>
+          <li>Java 1.7</li>
+          <li>Gradle required for build.</li>
+          <li>daemon required for start as a daemon.</li>
+        </ul>
+      </section>
+    </aside>
+
+    <article id="contents">
+      <section>
+        <h2>Start/Stop/Status</h2>
+        <pre> $ cd /path/to/FacileHttpd
+ $ ./bin/facile.sh {start|stop|status}</pre>
+        or
+        <pre> $ cd /path/to/FacileHttpd
+ $ java -jar build/libs/FacileHttpd.jar conf/facilehttpd.xml</pre>
+      </section>
+
+      <section>
+        <h2>Configuration</h2>
+        <pre>&lt;?xml version="1.0" encoding="UTF-8"?>
+
+&lt;facile>
+  &lt;servers>
+    &lt;server>
+      &lt;documentRoot>./html&lt;/documentRoot>
+      &lt;index>index.html&lt;/index>
+      &lt;port>9000&lt;/port>
+    &lt;/server>
+  &lt;/servers>
+&lt;/facile></pre>
+      </section>
+    </article>
+    <footer>
+      <p id="copyright">Copyright &copy; 2013 i2bskn</p>
+    </footer>
+  </div>
+</body>
 </html>

@@ -7,10 +7,10 @@ public class FacileHttpd {
   private ServerSocket ssock;
   private Configuration config;
 
-  public FacileHttpd(Configuration c) {
+  public FacileHttpd(Configuration config) {
     try {
-      config = c;
-      ssock = new ServerSocket(config.port);
+      this.config = config;
+      ssock = new ServerSocket(config.getPort());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -20,7 +20,7 @@ public class FacileHttpd {
     try {
       while (true) {
         Socket sock = ssock.accept();
-        WorkerThread worker = new WorkerThread(sock, config.docroot, config.index);
+        WorkerThread worker = new WorkerThread(sock, config.getDocumentRoot(), config.getIndex());
         worker.start();
       }
     } catch (Exception e) {

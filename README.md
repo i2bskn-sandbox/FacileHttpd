@@ -44,7 +44,7 @@ Installation
 Configuration
 -------------
 
-Edit the `conf/Facile.xml`.
+Edit the `conf/facilehttpd.xml`.
 
 Usage
 -----

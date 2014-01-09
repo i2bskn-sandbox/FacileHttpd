@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-<entry key="DocumentRoot">./html</entry>
-<entry key="Index">index.html</entry>
-<entry key="Port">8080</entry>
-</properties>

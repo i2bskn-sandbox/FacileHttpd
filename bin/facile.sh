@@ -4,7 +4,7 @@ FACILE_HOME=$(cd "$(dirname $0)/../";pwd)
 PID=$FACILE_HOME/log/facile.pid
 LOG=$FACILE_HOME/log/facile.log
 JAR=$FACILE_HOME/build/libs/FacileHttpd.jar
-CONF=$FACILE_HOME/conf/Facile.xml
+CONF=$FACILE_HOME/conf/facilehttpd.xml
 
 JAVA_HOME=${JAVA_HOME-/usr/local/java}
 JAVA=$JAVA_HOME/bin/java
